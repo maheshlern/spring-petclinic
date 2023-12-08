@@ -4,7 +4,8 @@ pipeline {
         timeout(time: 1, unit: 'MINUTES')
     }
     triggers {
-        pollSCM('* * * * *')
+        //pollSCM('* * * * *')
+        cron(30 16 * * *)
     }       
     stages {
         stage('git'){
