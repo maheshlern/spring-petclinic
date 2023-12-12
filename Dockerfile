@@ -1,6 +1,6 @@
-FROM maven:3-jdk-8 as mvn 
-RUN git clone https://github.com/dummyrepos/spring-petclinic-nov23.git
-RUN cd spring-petclinic && mvn package
+#FROM maven:3-jdk-8 as mvn 
+#RUN git clone https://github.com/dummyrepos/spring-petclinic-nov23.git
+#RUN cd spring-petclinic && mvn package
 
 FROM amazoncorretto:17-alpine-jdk
 LABEL AUTHOR="khaja"

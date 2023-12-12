@@ -17,6 +17,7 @@ pipeline {
         stage('build'){
             steps {
                 sh 'mvn clean package' 
+                stash name: 'spc', includes: '**/target/spring-petclinic-3.2.0-SNAPSHOT.jar'
                 withSonarQubeEnv(installationName: 'SONAR_CLOUD', credentialsId: 'SONAR_CLOUD') {
                     sh 'mvn clean verify sonar:sonar -Dsonar.token=<your personal access token> -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=<your organization key> -Dsonar.projectKey=<your project key>'
                 }
@@ -47,13 +48,16 @@ pipeline {
                 }
             }
         }
-
         stage('docker image') {
             agent {label 'DOCKER'}
             steps {
+                unstash name: 'spc'
                 sh 'docker image build -t shaikkhajaibrahim/spc:dev-$BUILD_ID .'
             }
         }
     }
 
 }
+
+
+//build package in one node, copying that into one node past into another node - Stash and Unstash
